@@ -1,0 +1,61 @@
+{
+  "scanId": "6ae82afa7c8f57f8c28d10fa",
+  "target": "http://juiceshop:3000/",
+  "scanType": "standard",
+  "login": null,
+  "toolsRun": [
+    {
+      "tool": "Nmap",
+      "status": "done",
+      "durationSeconds": 260,
+      "rawAlerts": 1,
+      "afterDuplicateRemoval": 1,
+      "command": "docker run --name vulnsync-a2368ae65486 --network vulnsync-lab --rm instrumentisto/nmap:latest -Pn -F -sV -T4 --open -oX - juiceshop"
+    },
+    {
+      "tool": "Nuclei",
+      "status": "done",
+      "durationSeconds": 433,
+      "rawAlerts": 0,
+      "afterDuplicateRemoval": 0,
+      "command": "docker run --name vulnsync-4a06303d1f1d --network vulnsync-lab --rm -v vulnsync-nuclei-templates:/root/nuclei-templates projectdiscovery/nuclei:latest -u http://juiceshop:3000/ -jsonl -silent -nc -severity low,medium,high,critical -timeout 10 -rl 50"
+    },
+    {
+      "tool": "ZAP",
+      "status": "done",
+      "durationSeconds": 574,
+      "rawAlerts": 38,
+      "afterDuplicateRemoval": 38,
+      "command": "docker run --name vulnsync-f0b0488355f5 --network vulnsync-lab --rm -v C:\\VulnSync-MERN\\VulnSync-MERN\\server\\scan-output\\6ae82afa7c8f57f8c28d10fa:/zap/wrk:rw ghcr.io/zaproxy/zaproxy:stable zap-baseline.py -t http://juiceshop:3000/ -J zap.json -j -T 10 -m 2 -I"
+    }
+  ],
+  "startedAt": "2026-11-02T06:19:31.350Z",
+  "finishedAt": "2026-11-02T06:40:42.483Z",
+  "totalDurationSeconds": 1271,
+  "alerts": {
+    "rawBeforeDuplicateRemoval": 39,
+    "afterDuplicateRemoval": 39,
+    "uniqueIssueTypes": 10,
+    "bySeverityAfterDuplicateRemoval": {
+      "High": 0,
+      "Medium": 10,
+      "Low": 29
+    }
+  },
+  "duplicateRule": "Same issue (same name, or same specific CWE) at the same URL path (query string ignored), including across different tools.",
+  "notes": [],
+  "versions": {
+    "checkedAt": "2026-11-02T04:34:04.718Z",
+    "images": {
+      "zap": "ghcr.io/zaproxy/zaproxy:stable",
+      "nmap": "instrumentisto/nmap:latest",
+      "nuclei": "projectdiscovery/nuclei:latest"
+    },
+    "docker": "29.8.2 / 29.8.2",
+    "redis": "7.4.11",
+    "nmap": "7.98",
+    "nuclei": "3.11.1",
+    "nucleiTemplates": null,
+    "zap": null
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "scanId": "6ae8221b7c8f57f8c28d0d7f",
+  "target": "http://dvwa/",
+  "scanType": "standard",
+  "login": null,
+  "toolsRun": [
+    {
+      "tool": "Nmap",
+      "status": "done",
+      "durationSeconds": 10,
+      "rawAlerts": 1,
+      "afterDuplicateRemoval": 1,
+      "command": "docker run --name vulnsync-4aa14f7c47d3 --network vulnsync-lab --rm instrumentisto/nmap:latest -Pn -F -sV -T4 --open -oX - dvwa"
+    },
+    {
+      "tool": "Nuclei",
+      "status": "done",
+      "durationSeconds": 322,
+      "rawAlerts": 2,
+      "afterDuplicateRemoval": 2,
+      "command": "docker run --name vulnsync-b3eebaebaa71 --network vulnsync-lab --rm -v vulnsync-nuclei-templates:/root/nuclei-templates projectdiscovery/nuclei:latest -u http://dvwa/ -jsonl -silent -nc -severity low,medium,high,critical -timeout 10 -rl 50"
+    },
+    {
+      "tool": "ZAP",
+      "status": "done",
+      "durationSeconds": 158,
+      "rawAlerts": 49,
+      "afterDuplicateRemoval": 39,
+      "command": "docker run --name vulnsync-8732865998e7 --network vulnsync-lab --rm -v C:\\VulnSync-MERN\\VulnSync-MERN\\server\\scan-output\\6ae8221b7c8f57f8c28d0d7f:/zap/wrk:rw ghcr.io/zaproxy/zaproxy:stable zap-baseline.py -t http://dvwa/ -J zap.json -j -T 10 -m 2 -I"
+    }
+  ],
+  "startedAt": "2026-11-02T05:39:40.050Z",
+  "finishedAt": "2026-11-02T05:47:50.674Z",
+  "totalDurationSeconds": 491,
+  "alerts": {
+    "rawBeforeDuplicateRemoval": 52,
+    "afterDuplicateRemoval": 42,
+    "uniqueIssueTypes": 19,
+    "bySeverityAfterDuplicateRemoval": {
+      "High": 1,
+      "Medium": 6,
+      "Low": 35
+    }
+  },
+  "duplicateRule": "Same issue (same name, or same specific CWE) at the same URL path (query string ignored), including across different tools.",
+  "notes": [],
+  "versions": {
+    "checkedAt": "2026-11-02T04:34:04.718Z",
+    "images": {
+      "zap": "ghcr.io/zaproxy/zaproxy:stable",
+      "nmap": "instrumentisto/nmap:latest",
+      "nuclei": "projectdiscovery/nuclei:latest"
+    },
+    "docker": "29.8.2 / 29.8.2",
+    "redis": "7.4.11",
+    "nmap": "7.98",
+    "nuclei": "3.11.1",
+    "nucleiTemplates": null,
+    "zap": null
+  }
+}

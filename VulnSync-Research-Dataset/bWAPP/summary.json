@@ -1,0 +1,61 @@
+{
+  "scanId": "6ae81edc7c8f57f8c28d0c10",
+  "target": "http://bwapp/",
+  "scanType": "standard",
+  "login": null,
+  "toolsRun": [
+    {
+      "tool": "Nmap",
+      "status": "done",
+      "durationSeconds": 16,
+      "rawAlerts": 2,
+      "afterDuplicateRemoval": 2,
+      "command": "docker run --name vulnsync-eb5a43839db5 --network vulnsync-lab --rm instrumentisto/nmap:latest -Pn -F -sV -T4 --open -oX - bwapp"
+    },
+    {
+      "tool": "Nuclei",
+      "status": "done",
+      "durationSeconds": 332,
+      "rawAlerts": 3,
+      "afterDuplicateRemoval": 3,
+      "command": "docker run --name vulnsync-192884e5a4f2 --network vulnsync-lab --rm -v vulnsync-nuclei-templates:/root/nuclei-templates projectdiscovery/nuclei:latest -u http://bwapp/ -jsonl -silent -nc -severity low,medium,high,critical -timeout 10 -rl 50"
+    },
+    {
+      "tool": "ZAP",
+      "status": "done",
+      "durationSeconds": 200,
+      "rawAlerts": 88,
+      "afterDuplicateRemoval": 73,
+      "command": "docker run --name vulnsync-1ef820d237d1 --network vulnsync-lab --rm -v C:\\VulnSync-MERN\\VulnSync-MERN\\server\\scan-output\\6ae81edc7c8f57f8c28d0c10:/zap/wrk:rw ghcr.io/zaproxy/zaproxy:stable zap-baseline.py -t http://bwapp/ -J zap.json -j -T 10 -m 2 -I"
+    }
+  ],
+  "startedAt": "2026-11-02T05:25:48.685Z",
+  "finishedAt": "2026-11-02T05:34:56.837Z",
+  "totalDurationSeconds": 548,
+  "alerts": {
+    "rawBeforeDuplicateRemoval": 93,
+    "afterDuplicateRemoval": 78,
+    "uniqueIssueTypes": 28,
+    "bySeverityAfterDuplicateRemoval": {
+      "High": 2,
+      "Medium": 20,
+      "Low": 56
+    }
+  },
+  "duplicateRule": "Same issue (same name, or same specific CWE) at the same URL path (query string ignored), including across different tools.",
+  "notes": [],
+  "versions": {
+    "checkedAt": "2026-11-02T04:34:04.718Z",
+    "images": {
+      "zap": "ghcr.io/zaproxy/zaproxy:stable",
+      "nmap": "instrumentisto/nmap:latest",
+      "nuclei": "projectdiscovery/nuclei:latest"
+    },
+    "docker": "29.8.2 / 29.8.2",
+    "redis": "7.4.11",
+    "nmap": "7.98",
+    "nuclei": "3.11.1",
+    "nucleiTemplates": null,
+    "zap": null
+  }
+}
