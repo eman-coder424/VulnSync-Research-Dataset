@@ -1,4 +1,4 @@
-# VulnSync Research Dataset
+# VulnSync: Integrating ZAP, Nmap, and Nuclei in a Docker-Based Scanning Platform
 
 ## 1. Overview
 
